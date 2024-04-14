@@ -28,7 +28,7 @@ export const Search: FC<SearchProps> = ({ placeholder = 'Search...' }) => {
         {isSearchBarOpen ? (
           <XMarkIcon className="h-8 w-8 text-gray-700" />
         ) : (
-          <MagnifyingGlassIcon className="h-8 w-8 text-primary" />
+          <MagnifyingGlassIcon className="text-primary h-8 w-8" />
         )}
       </button>
     </div>
