@@ -1,5 +1,5 @@
+import { Search } from '@/components/core/search';
 import { Header } from '@/components/header';
-import { Search } from '@/components/search';
 
 export default function Home() {
   return (
