@@ -1,9 +1,11 @@
 import SectionHeader from '@/components/layout/section-header';
 
+import { UploadAnimation } from './containers/upload-animation';
+
 export default function Home() {
   return (
     <main className="container m-auto p-4 sm:px-2">
-      <SectionHeader title="Discover" />
+      <SectionHeader title="Discover" endAdornment={<UploadAnimation />} />
 
       {/* Render a list of 100 items to scroll */}
       <ul className="flex flex-col gap-4">
