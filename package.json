@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "commit": "git-cz",
-    "format": "prettier --ignore-unknown --write",
+    "format": "prettier",
     "type-check": "sh -c 'tsc --project tsconfig.json --pretty --noEmit'",
     "prepare": "husky"
   },
