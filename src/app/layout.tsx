@@ -6,6 +6,7 @@ import { Inter, Quicksand } from 'next/font/google';
 import { Search } from '@/components/core/search';
 import { Header } from '@/components/layout/header';
 
+import { ApolloProvider } from './contexts/apollo-client';
 import ToastProvider from './contexts/toastify';
 
 const inter = Inter({
@@ -64,13 +65,15 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${quicksand.variable}`}>
       <body className={'bg-neutral-900 font-inter text-slate-100'}>
-        <ToastProvider>
-          <Header>
-            <Search placeholder="Search animations..." />
-          </Header>
+        <ApolloProvider>
+          <ToastProvider>
+            <Header>
+              <Search placeholder="Search animations..." />
+            </Header>
 
-          {children}
-        </ToastProvider>
+            {children}
+          </ToastProvider>
+        </ApolloProvider>
       </body>
     </html>
   );
