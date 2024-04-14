@@ -6,6 +6,8 @@ import { Inter, Quicksand } from 'next/font/google';
 import { Search } from '@/components/core/search';
 import { Header } from '@/components/layout/header';
 
+import ToastProvider from './contexts/toastify';
+
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
@@ -62,11 +64,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${quicksand.variable}`}>
       <body className={'bg-neutral-900 font-inter text-slate-100'}>
-        <Header>
-          <Search placeholder="Search animations..." />
-        </Header>
+        <ToastProvider>
+          <Header>
+            <Search placeholder="Search animations..." />
+          </Header>
 
-        {children}
+          {children}
+        </ToastProvider>
       </body>
     </html>
   );

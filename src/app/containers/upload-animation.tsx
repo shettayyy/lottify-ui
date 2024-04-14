@@ -6,10 +6,43 @@ import { useDropzone } from 'react-dropzone';
 import Button from '@/components/core/button';
 import { Modal } from '@/components/core/modal';
 import useToggle from '@/hooks/useToggle';
+import { showToast } from '@/utils/toast';
+
+// Validate the file type, size and empty file. If validation fails, send the message and status (true/false)
+const validateFile = (file: File) => {
+  if (!file) {
+    return {
+      status: false,
+      message: 'No file uploaded! Please upload a JSON file.',
+    };
+  }
+
+  if (file.size > 20 * 1024 * 1024) {
+    return {
+      status: false,
+      message: 'File size is too large! Max file size is 20 MB.',
+    };
+  }
+
+  if (file.type !== 'application/json') {
+    return {
+      status: false,
+      message: 'Invalid file type! Please upload a JSON file.',
+    };
+  }
+
+  return { status: true, message: '' };
+};
 
 export const UploadAnimation = () => {
   const [isOpen, toggle] = useToggle();
   const onDrop = (acceptedFiles: File[]) => {
+    const validation = validateFile(acceptedFiles[0]);
+
+    if (!validation.status) {
+      return showToast('error', validation.message);
+    }
+
     // Handle file upload logic here
     console.info('Accepted files:', acceptedFiles);
   };
