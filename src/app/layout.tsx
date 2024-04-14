@@ -1,9 +1,19 @@
 import './globals.css';
 
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, Quicksand } from 'next/font/google';
 
-const inter = Inter({ subsets: ['latin'] });
+import { Search } from '@/components/core/search';
+import { Header } from '@/components/layout/header';
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+});
+const quicksand = Quicksand({
+  subsets: ['latin'],
+  variable: '--font-quicksand',
+});
 
 export const metadata: Metadata = {
   title: 'Lottify',
@@ -50,8 +60,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} bg-neutral-800 text-slate-100`}>
+    <html lang="en" className={`${inter.variable} ${quicksand.variable}`}>
+      <body className={'bg-neutral-900 font-inter text-slate-100'}>
+        <Header>
+          <Search placeholder="Search animations..." />
+        </Header>
+
         {children}
       </body>
     </html>
