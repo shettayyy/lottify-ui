@@ -17,6 +17,7 @@ export type UploadModalProps = {
     animationId: string,
     file: File,
   ) => Promise<void>;
+  onClose: () => void;
 };
 
 // Validate the file type, size and empty file. If validation fails, send the message and status (true/false)
@@ -45,8 +46,8 @@ const validateFile = (file: File) => {
   return { status: true, message: '' };
 };
 
-export const UploadModal: FC<UploadModalProps> = props => {
-  const { uploadFileToCloud } = props;
+export const UploadModalBody: FC<UploadModalProps> = props => {
+  const { uploadFileToCloud, onClose } = props;
   const [generateLottieUploadUrl, { loading }] = useMutation<
     LottieSignedUploadURL,
     LottieUploadURLInput
@@ -76,10 +77,11 @@ export const UploadModal: FC<UploadModalProps> = props => {
         onCompleted: data => {
           const { url, id } = data.generateUploadLottieURL;
           void uploadFileToCloud(url, id, file);
+          onClose();
         },
       });
     },
-    [generateLottieUploadUrl, uploadFileToCloud],
+    [generateLottieUploadUrl, onClose, uploadFileToCloud],
   );
 
   // Get the root props and input props for the dropzone component which will be used to upload the file

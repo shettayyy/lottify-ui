@@ -11,8 +11,8 @@ import useToggle from '@/libs/hooks/useToggle';
 import { showToast } from '@/libs/utils/toast';
 import { uploadFileInChunksWithRetry } from '@/libs/utils/upload';
 
-const DynamicUploadModal = dynamic(
-  () => import('./upload-modal').then(mod => mod.UploadModal),
+const DynamicUploadModalBody = dynamic(
+  () => import('./upload-modal-body').then(mod => mod.UploadModalBody),
   {
     loading: () => <p>Loading...</p>,
   },
@@ -68,8 +68,6 @@ export const UploadAnimation = () => {
             isTotalUnkown: true,
           });
         }
-
-        showToast('success', 'File uploaded successfully');
       } catch (error) {
         showToast('error', (error as Error).message);
 
@@ -97,7 +95,10 @@ export const UploadAnimation = () => {
       </Button>
 
       <Modal title="Upload animation" isOpen={isOpen} toggle={toggle}>
-        <DynamicUploadModal uploadFileToCloud={uploadFileToCloud} />
+        <DynamicUploadModalBody
+          onClose={toggle}
+          uploadFileToCloud={uploadFileToCloud}
+        />
       </Modal>
     </>
   );
