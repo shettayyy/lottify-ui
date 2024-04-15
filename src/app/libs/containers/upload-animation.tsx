@@ -1,12 +1,20 @@
 'use client';
+import { useMutation } from '@apollo/client';
 import { CloudArrowUpIcon } from '@heroicons/react/16/solid';
 import { DocumentArrowUpIcon } from '@heroicons/react/24/solid';
 import { useDropzone } from 'react-dropzone';
 
-import Button from '@/components/core/button';
-import { Modal } from '@/components/core/modal';
-import useToggle from '@/hooks/useToggle';
-import { showToast } from '@/utils/toast';
+import Button from '@/libs/components/core/button';
+import { Modal } from '@/libs/components/core/modal';
+import { GENERATE_LOTTIE_UPLOAD_URL } from '@/libs/graphql/mutations/upload';
+import useToggle from '@/libs/hooks/useToggle';
+import {
+  LottieSignedUploadURL,
+  LottieUploadURLInput,
+} from '@/libs/types/lottie';
+import { showToast } from '@/libs/utils/toast';
+
+import { uploadFileInChunksWithRetry } from '../utils/upload';
 
 // Validate the file type, size and empty file. If validation fails, send the message and status (true/false)
 const validateFile = (file: File) => {
@@ -36,6 +44,20 @@ const validateFile = (file: File) => {
 
 export const UploadAnimation = () => {
   const [isOpen, toggle] = useToggle();
+  const uploadFileToCloud = async (url: string, file: File) => {
+    try {
+      await uploadFileInChunksWithRetry(url, file);
+      showToast('success', 'File uploaded successfully!');
+    } catch (error) {
+      showToast('error', (error as Error).message);
+    }
+  };
+  const [generateLottieUploadUrl, { loading }] = useMutation<
+    LottieSignedUploadURL,
+    LottieUploadURLInput
+  >(GENERATE_LOTTIE_UPLOAD_URL);
+
+  // Handle file drop event
   const onDrop = (acceptedFiles: File[]) => {
     const validation = validateFile(acceptedFiles[0]);
 
@@ -43,10 +65,25 @@ export const UploadAnimation = () => {
       return showToast('error', validation.message);
     }
 
+    const file = acceptedFiles[0];
+
     // Handle file upload logic here
-    console.info('Accepted files:', acceptedFiles);
+    generateLottieUploadUrl({
+      variables: {
+        input: {
+          filename: file.name,
+        },
+      },
+      onError: error => {
+        showToast('error', error.message);
+      },
+      onCompleted: data => {
+        void uploadFileToCloud(data.generateUploadLottieURL.url, file);
+      },
+    });
   };
 
+  // Get the root props and input props for the dropzone component which will be used to upload the file
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
   return (
@@ -79,7 +116,9 @@ export const UploadAnimation = () => {
               </p>
               <span className="mb-2 text-gray-600">or</span>
 
-              <Button type="button">Browse</Button>
+              <Button type="button">
+                {loading ? 'Uploading...' : 'Select file'}
+              </Button>
             </div>
           </div>
         </div>

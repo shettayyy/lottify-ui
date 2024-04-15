@@ -3,11 +3,11 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Inter, Quicksand } from 'next/font/google';
 
-import { Search } from '@/components/core/search';
-import { Header } from '@/components/layout/header';
+import { Search } from '@/libs/components/core/search';
+import { Header } from '@/libs/components/layout/header';
 
-import { ApolloProvider } from './contexts/apollo-client';
-import ToastProvider from './contexts/toastify';
+import { ApolloProvider } from './libs/contexts/apollo-client';
+import ToastProvider from './libs/contexts/toastify';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -64,7 +64,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${quicksand.variable}`}>
-      <body className={'bg-neutral-900 font-inter text-slate-100'}>
+      {/* suppressHydrationWarning suppresses warning related to colorzilla */}
+      <body
+        className={'bg-neutral-900 font-inter text-slate-100'}
+        suppressHydrationWarning={true}
+      >
         <ApolloProvider>
           <ToastProvider>
             <Header>

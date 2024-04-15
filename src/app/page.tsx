@@ -1,6 +1,6 @@
-import SectionHeader from '@/components/layout/section-header';
+import SectionHeader from '@/libs/components/layout/section-header';
 
-import { UploadAnimation } from './containers/upload-animation';
+import { UploadAnimation } from './libs/containers/upload-animation';
 
 export default function Home() {
   return (
