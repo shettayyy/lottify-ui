@@ -7,6 +7,7 @@ import { Search } from '@/libs/components/core/search';
 import { Header } from '@/libs/components/layout/header';
 import { ApolloProvider } from '@/libs/contexts/apollo-client';
 import ToastProvider from '@/libs/contexts/toastify';
+import { UploadStatusProvider } from '@/libs/contexts/upload-status';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -70,11 +71,13 @@ export default function RootLayout({
       >
         <ApolloProvider>
           <ToastProvider>
-            <Header>
-              <Search placeholder="Search animations..." />
-            </Header>
+            <UploadStatusProvider>
+              <Header>
+                <Search placeholder="Search animations..." />
+              </Header>
 
-            {children}
+              {children}
+            </UploadStatusProvider>
           </ToastProvider>
         </ApolloProvider>
       </body>
