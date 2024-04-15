@@ -5,9 +5,8 @@ import { Inter, Quicksand } from 'next/font/google';
 
 import { Search } from '@/libs/components/core/search';
 import { Header } from '@/libs/components/layout/header';
-
-import { ApolloProvider } from './libs/contexts/apollo-client';
-import ToastProvider from './libs/contexts/toastify';
+import { ApolloProvider } from '@/libs/contexts/apollo-client';
+import ToastProvider from '@/libs/contexts/toastify';
 
 const inter = Inter({
   subsets: ['latin'],

@@ -3,7 +3,7 @@ import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/16/solid';
 import { clsx } from 'clsx';
 import { FC } from 'react';
 
-import useToggle from '@/libs/hooks/useToggle';
+import useToggle from '../../hooks/useToggle';
 
 type SearchProps = {
   placeholder?: string;
