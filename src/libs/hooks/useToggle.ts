@@ -1,15 +1,13 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 type Result = [boolean, VoidFunction];
 
-export default function useToggle(defaultValue?: boolean) {
+export default function useToggle(defaultValue?: boolean): Result {
   const [state, setState] = useState(defaultValue ?? false);
 
-  function toggle() {
-    setState(prevState => !prevState);
-  }
+  const toggle = useCallback(() => {
+    setState(prev => !prev);
+  }, []);
 
-  const result: Result = [state, toggle];
-
-  return result;
+  return [state, toggle];
 }

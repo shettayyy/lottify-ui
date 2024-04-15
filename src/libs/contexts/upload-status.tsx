@@ -15,10 +15,12 @@ export type LottieUploadProgressStatus = {
 
 const UploadStatusContext = createContext<{
   queue: LottieUploadProgressStatus[];
+  count: number;
   updateQueue: (file: LottieUploadProgressStatus) => void;
   clearQueue: () => void;
 }>({
   queue: [],
+  count: 0,
   updateQueue: () => {},
   clearQueue: () => {},
 });
@@ -27,12 +29,13 @@ export const UploadStatusProvider: React.FC<PropsWithChildren> = ({
   children,
 }) => {
   const [queue, setQueue] = useState<LottieUploadProgressStatus[]>([]);
+  const [count, setCount] = useState(0);
 
   const clearQueue = () => {
     setQueue([]);
+    setCount(0);
   };
 
-  // Add a new file to the queue or update the progress of an existing file
   const updateQueue = (file: LottieUploadProgressStatus) => {
     const existingFile = queue.find(f => f.animationId === file.animationId);
 
@@ -44,11 +47,14 @@ export const UploadStatusProvider: React.FC<PropsWithChildren> = ({
       );
     } else {
       setQueue(prevQueue => [...prevQueue, file]);
+      setCount(prevCount => prevCount + 1);
     }
   };
 
   return (
-    <UploadStatusContext.Provider value={{ queue, clearQueue, updateQueue }}>
+    <UploadStatusContext.Provider
+      value={{ queue, count, clearQueue, updateQueue }}
+    >
       {children}
     </UploadStatusContext.Provider>
   );

@@ -1,3 +1,4 @@
+import UploadProgressMenu from '@/libs/components/app-specific/upload-progress-menu';
 import SectionHeader from '@/libs/components/layout/section-header';
 import { UploadAnimation } from '@/libs/containers/upload-animation/upload-animation';
 
@@ -14,6 +15,8 @@ export default function Home() {
           </li>
         ))}
       </ul>
+
+      <UploadProgressMenu />
     </main>
   );
 }

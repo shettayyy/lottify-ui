@@ -9,7 +9,7 @@ type HeaderProps = {
 
 export const Header: FC<HeaderProps> = ({ children }) => {
   return (
-    <header className="sticky top-0 bg-neutral-800 shadow-lg">
+    <header className="sticky top-0 z-10 bg-neutral-800 shadow-lg">
       <div className="container m-auto flex items-center justify-between p-4 sm:px-2">
         <Link href="/" className="flex items-center gap-2">
           <Image
