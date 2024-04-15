@@ -40,22 +40,54 @@ const uploadChunkWithRetry = async ({
 };
 
 // Upload a file to a signed URL in chunks
+// export const uploadFileInChunksWithRetry = async ({
+//   signedUrl,
+//   data: file,
+//   onUploadProgress,
+//   maxAttempts = 5,
+// }: UploadParams): Promise<void> => {
+//   const CHUNK_SIZE = 1024 * 1024; // 1MB chunk size
+//   const fileSize = file.size;
+//   let start = 0;
+
+//   while (start < fileSize) {
+//     const chunk = file.slice(start, start + CHUNK_SIZE);
+//     await uploadChunkWithRetry({
+//       signedUrl,
+//       data: chunk,
+//       onUploadProgress,
+//       maxAttempts,
+//     });
+//     start += CHUNK_SIZE;
+//   }
+// };
+
+// rewrite this uploadFileInChunksWithRetry function to provide upload progress of the entire file instead of individual chunks
 export const uploadFileInChunksWithRetry = async ({
   signedUrl,
   data: file,
   onUploadProgress,
   maxAttempts = 5,
 }: UploadParams): Promise<void> => {
-  const CHUNK_SIZE = 1024 * 1024; // 1MB chunk size
+  const CHUNK_SIZE = 500 * 1024; // 500 kb chunk size
   const fileSize = file.size;
   let start = 0;
+  let totalUploaded = 0;
 
   while (start < fileSize) {
     const chunk = file.slice(start, start + CHUNK_SIZE);
     await uploadChunkWithRetry({
       signedUrl,
       data: chunk,
-      onUploadProgress,
+      onUploadProgress: progressEvent => {
+        totalUploaded += progressEvent.loaded;
+
+        onUploadProgress({
+          ...progressEvent,
+          loaded: totalUploaded,
+          total: fileSize,
+        });
+      },
       maxAttempts,
     });
     start += CHUNK_SIZE;

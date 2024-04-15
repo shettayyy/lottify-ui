@@ -12,7 +12,11 @@ import {
 import { showToast } from '../../utils/toast';
 
 export type UploadModalProps = {
-  uploadFileToCloud: (url: string, file: File) => Promise<void>;
+  uploadFileToCloud: (
+    url: string,
+    animationId: string,
+    file: File,
+  ) => Promise<void>;
 };
 
 // Validate the file type, size and empty file. If validation fails, send the message and status (true/false)
@@ -70,7 +74,8 @@ export const UploadModal: FC<UploadModalProps> = props => {
           showToast('error', error.message);
         },
         onCompleted: data => {
-          void uploadFileToCloud(data.generateUploadLottieURL.url, file);
+          const { url, id } = data.generateUploadLottieURL;
+          void uploadFileToCloud(url, id, file);
         },
       });
     },

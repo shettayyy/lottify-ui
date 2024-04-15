@@ -2,7 +2,7 @@
  * Create a provider to track the count of files being uploaded and it will be used
  * to show a progress bar.
  * */
-
+'use client';
 import { createContext, PropsWithChildren, useContext, useState } from 'react';
 
 export type LottieUploadProgressStatus = {
@@ -10,6 +10,7 @@ export type LottieUploadProgressStatus = {
   filename: string;
   progress: number;
   isTotalUnkown: boolean;
+  error?: string;
 };
 
 const UploadStatusContext = createContext<{
@@ -33,12 +34,12 @@ export const UploadStatusProvider: React.FC<PropsWithChildren> = ({
 
   // Add a new file to the queue or update the progress of an existing file
   const updateQueue = (file: LottieUploadProgressStatus) => {
-    const existingFile = queue.find(f => f.filename === file.filename);
+    const existingFile = queue.find(f => f.animationId === file.animationId);
 
     if (existingFile) {
       setQueue(prevQueue =>
         prevQueue.map(f =>
-          f.filename === file.filename ? { ...f, ...file } : f,
+          f.animationId === file.animationId ? { ...f, ...file } : f,
         ),
       );
     } else {

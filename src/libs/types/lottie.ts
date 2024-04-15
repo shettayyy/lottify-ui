@@ -1,6 +1,7 @@
 export type LottieSignedUploadURL = {
   generateUploadLottieURL: {
     url: string;
+    id: string;
   };
 };
 
