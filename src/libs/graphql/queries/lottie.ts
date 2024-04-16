@@ -9,6 +9,11 @@ export const GET_LOTTIES = gql`
         filesize
         url
       }
+      metadata {
+        pagination {
+          nextPage
+        }
+      }
     }
   }
 `;

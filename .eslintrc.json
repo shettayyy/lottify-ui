@@ -41,7 +41,8 @@
     "simple-import-sort/exports": "error",
     "import-x/first": "error",
     "import-x/newline-after-import": "error",
-    "import-x/no-duplicates": "error"
+    "import-x/no-duplicates": "error",
+    "import-x/no-named-as-default": "off"
   },
   "settings": {
     "import-x/parsers": {

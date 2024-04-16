@@ -61,8 +61,8 @@ export type GetLottieParams = {
 export type GetLotties = {
   lotties: {
     result: Lottie[];
-  };
-  metadata: {
-    pagination: Pagination;
+    metadata: {
+      pagination: Pagination;
+    };
   };
 };
