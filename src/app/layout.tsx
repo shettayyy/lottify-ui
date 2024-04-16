@@ -19,6 +19,7 @@ const quicksand = Quicksand({
 });
 
 export const metadata: Metadata = {
+  manifest: '/manifest.json',
   title: 'Lottify',
   description: 'Lightweight, scalable animations for your websites and apps',
   icons: [
