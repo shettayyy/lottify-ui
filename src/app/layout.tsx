@@ -1,8 +1,9 @@
 import './globals.css';
 
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Inter, Quicksand } from 'next/font/google';
 
+import PWAInstallPrompt from '@/libs/components/app-specific/pwa-install-prompt';
 import { Search } from '@/libs/components/core/search';
 import { Header } from '@/libs/components/layout/header';
 import { ApolloProvider } from '@/libs/contexts/apollo-client';
@@ -58,6 +59,10 @@ export const metadata: Metadata = {
   ],
 };
 
+export const viewport: Viewport = {
+  themeColor: '#00DDB3',
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -81,6 +86,8 @@ export default function RootLayout({
             </UploadStatusProvider>
           </ToastProvider>
         </ApolloProvider>
+
+        <PWAInstallPrompt />
       </body>
     </html>
   );

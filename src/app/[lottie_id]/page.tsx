@@ -81,7 +81,9 @@ export default function LottiePage(props: LottiePageProps) {
         </div>
 
         <div className="flex justify-center">
-          <Button onClick={handleCopyUrl}>Copy URL</Button>
+          <Button type="button" onClick={handleCopyUrl}>
+            Copy URL
+          </Button>
         </div>
 
         <div className="m-auto grid max-w-screen-lg grid-cols-2 gap-8 md:grid-cols-4">
