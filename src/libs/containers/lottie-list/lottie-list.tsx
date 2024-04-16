@@ -7,10 +7,16 @@ import CircularLoader from '@/libs/components/core/circular-loader';
 import { InfiniteScroll } from '@/libs/components/core/infinite-scroll';
 import { GET_LOTTIES } from '@/libs/graphql/queries/lottie';
 import { GetLottieParams, GetLotties } from '@/libs/types/lottie';
+import { showToast } from '@/libs/utils/toast';
 
 export const LottieList = () => {
   const { data, loading, fetchMore } = useQuery<GetLotties, GetLottieParams>(
     GET_LOTTIES,
+    {
+      onError(error) {
+        showToast('error', error.message);
+      },
+    },
   );
 
   const handleIntersect = useCallback(() => {

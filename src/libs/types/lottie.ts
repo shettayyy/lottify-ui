@@ -66,3 +66,13 @@ export type GetLotties = {
     };
   };
 };
+
+export type GetLottieInput = {
+  input: {
+    id: string;
+  };
+};
+
+export type GetLottie = {
+  lottie: Lottie;
+};

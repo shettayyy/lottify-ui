@@ -1,10 +1,9 @@
 'use client';
 import { DocumentArrowDownIcon } from '@heroicons/react/24/solid';
-import Axios from 'axios';
-import PlayLottie, { LottieOptions } from 'lottie-react';
+import PlayLottie from 'lottie-react';
 import Link from 'next/link';
-import { useCallback, useEffect, useState } from 'react';
 
+import { useLottieAnimation } from '@/libs/hooks/useLottieAnimation';
 import { Lottie } from '@/libs/types/lottie';
 import { formatBytes } from '@/libs/utils/file';
 
@@ -14,19 +13,7 @@ export type LottieCardProps = {
 };
 
 export const LottieCard = ({ lottie, loading }: LottieCardProps) => {
-  const [animation, setAnimation] =
-    useState<LottieOptions['animationData']>(null);
-
-  const loadAnimation = useCallback(async () => {
-    if (loading || !lottie?.url) return;
-
-    // clear params from url
-    const url = lottie.url.split('?')[0];
-    const { data } = await Axios.get(url, {
-      responseType: 'json',
-    });
-    setAnimation(data);
-  }, [loading, lottie?.url]);
+  const { animationData } = useLottieAnimation(lottie);
 
   const handleDownload = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -47,10 +34,6 @@ export const LottieCard = ({ lottie, loading }: LottieCardProps) => {
     link.click();
     document.body.removeChild(link);
   };
-
-  useEffect(() => {
-    loadAnimation();
-  }, [loadAnimation]);
 
   // if loading is true, show a loading card
   if (loading) {
@@ -95,7 +78,7 @@ export const LottieCard = ({ lottie, loading }: LottieCardProps) => {
 
         <div className="relative h-56 w-full overflow-hidden">
           <PlayLottie
-            animationData={animation}
+            animationData={animationData}
             width="100%"
             height="100%"
             className="absolute inset-0"
