@@ -1,4 +1,5 @@
 'use client';
+import { useMutation } from '@apollo/client';
 import { CloudArrowUpIcon } from '@heroicons/react/16/solid';
 import { AxiosProgressEvent } from 'axios';
 import dynamic from 'next/dynamic';
@@ -7,7 +8,9 @@ import { useCallback } from 'react';
 import Button from '@/libs/components/core/button';
 import { Modal } from '@/libs/components/core/modal';
 import { useUploadStatus } from '@/libs/contexts/upload-status';
+import { SAVE_LOTTIE_METADATA } from '@/libs/graphql/mutations/upload';
 import useToggle from '@/libs/hooks/useToggle';
+import { Lottie, LottieMetadataInput } from '@/libs/types/lottie';
 import { showToast } from '@/libs/utils/toast';
 import { uploadFileInChunksWithRetry } from '@/libs/utils/upload';
 
@@ -21,6 +24,14 @@ const DynamicUploadModalBody = dynamic(
 export const UploadAnimation = () => {
   const [isOpen, toggle] = useToggle();
   const { updateQueue } = useUploadStatus();
+  const [saveLottieMetadata] = useMutation<Lottie, LottieMetadataInput>(
+    SAVE_LOTTIE_METADATA,
+    {
+      onError: error => {
+        showToast('error', (error as Error).message);
+      },
+    },
+  );
 
   const onUploadProgress = useCallback(
     (progressEvent: AxiosProgressEvent, animationId: string, file: File) => {
@@ -49,7 +60,9 @@ export const UploadAnimation = () => {
 
   // Upload the file to the cloud storage
   const uploadFileToCloud = useCallback(
-    async (url: string, animationId: string, file: File) => {
+    async (lottie: Lottie, file: File) => {
+      const { url, animationId, _id, filename } = lottie;
+
       try {
         await uploadFileInChunksWithRetry({
           signedUrl: url,
@@ -68,6 +81,17 @@ export const UploadAnimation = () => {
             isTotalUnkown: true,
           });
         }
+
+        // Start the metadata extraction process
+        saveLottieMetadata({
+          variables: {
+            input: {
+              animationId,
+              filename,
+              _id,
+            },
+          },
+        });
       } catch (error) {
         showToast('error', (error as Error).message);
 
@@ -80,7 +104,7 @@ export const UploadAnimation = () => {
         });
       }
     },
-    [onUploadProgress, updateQueue],
+    [onUploadProgress, saveLottieMetadata, updateQueue],
   );
 
   return (

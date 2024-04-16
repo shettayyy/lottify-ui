@@ -3,20 +3,17 @@ import { DocumentArrowUpIcon } from '@heroicons/react/24/solid';
 import { FC, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 
-import Button from '../../components/core/button';
-import { GENERATE_LOTTIE_UPLOAD_URL } from '../../graphql/mutations/upload';
+import Button from '@/libs/components/core/button';
+import { GENERATE_LOTTIE_UPLOAD_URL } from '@/libs/graphql/mutations/upload';
 import {
+  Lottie,
   LottieSignedUploadURL,
   LottieUploadURLInput,
-} from '../../types/lottie';
-import { showToast } from '../../utils/toast';
+} from '@/libs/types/lottie';
+import { showToast } from '@/libs/utils/toast';
 
 export type UploadModalProps = {
-  uploadFileToCloud: (
-    url: string,
-    animationId: string,
-    file: File,
-  ) => Promise<void>;
+  uploadFileToCloud: (lottie: Lottie, file: File) => Promise<void>;
   onClose: () => void;
 };
 
@@ -69,14 +66,14 @@ export const UploadModalBody: FC<UploadModalProps> = props => {
         variables: {
           input: {
             filename: file.name,
+            filesize: file.size,
           },
         },
         onError: error => {
           showToast('error', error.message);
         },
         onCompleted: data => {
-          const { url, id } = data.generateUploadLottieURL;
-          void uploadFileToCloud(url, id, file);
+          void uploadFileToCloud(data.generateUploadLottieURL, file);
           onClose();
         },
       });
