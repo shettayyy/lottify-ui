@@ -1,4 +1,5 @@
 'use client';
+import { DocumentArrowDownIcon } from '@heroicons/react/24/solid';
 import Axios from 'axios';
 import PlayLottie, { LottieOptions } from 'lottie-react';
 import Link from 'next/link';
@@ -26,6 +27,26 @@ export const LottieCard = ({ lottie, loading }: LottieCardProps) => {
     });
     setAnimation(data);
   }, [loading, lottie?.url]);
+
+  const handleDownload = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
+    e.preventDefault();
+    if (!lottie?.url) return;
+
+    const downloadUrl = lottie.url.split('?')[0];
+    const downloadFilename = `${lottie.filename}.json`;
+
+    // Create a temporary link element
+    const link = document.createElement('a');
+    link.href = downloadUrl;
+    link.download = downloadFilename;
+
+    // Simulate a click on the link to trigger the download
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   useEffect(() => {
     loadAnimation();
@@ -57,11 +78,19 @@ export const LottieCard = ({ lottie, loading }: LottieCardProps) => {
       className="rounded-lg bg-neutral-800 shadow-lg"
     >
       <div className="p-4">
-        <div className="mb-4">
-          <h3 className="line-clamp-2 text-lg font-semibold capitalize">
-            {formattedFilename}
-          </h3>
-          <p className="text-sm">{formatBytes(lottie.filesize)}</p>
+        <div className="mb-4 flex items-start justify-between">
+          <div>
+            <h3 className="line-clamp-2 text-lg font-semibold capitalize">
+              {formattedFilename}
+            </h3>
+            <p className="text-sm">{formatBytes(lottie.filesize)}</p>
+          </div>
+          <button
+            onClick={handleDownload}
+            className="mt-1 text-neutral-400 transition duration-300 hover:text-neutral-200"
+          >
+            <DocumentArrowDownIcon className="h-6 w-6 text-primary" />
+          </button>
         </div>
 
         <div className="relative h-56 w-full overflow-hidden">
