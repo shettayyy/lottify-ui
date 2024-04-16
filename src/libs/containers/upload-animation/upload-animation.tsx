@@ -53,6 +53,7 @@ export const UploadAnimation = () => {
         filename: file.name,
         progress,
         isTotalUnkown,
+        error: '',
       });
     },
     [updateQueue],
@@ -64,6 +65,7 @@ export const UploadAnimation = () => {
       const { url, animationId, _id, filename } = lottie;
 
       try {
+        // Upload the file in chunks
         await uploadFileInChunksWithRetry({
           signedUrl: url,
           data: file,
@@ -73,6 +75,7 @@ export const UploadAnimation = () => {
         });
 
         // This is a workaround to handle the case when the file size is not available
+        // In our case, this should never happen though
         if (!file.size) {
           updateQueue({
             animationId,
@@ -83,6 +86,7 @@ export const UploadAnimation = () => {
         }
 
         // Start the metadata extraction process
+        // User does not need to wait for this to complete
         saveLottieMetadata({
           variables: {
             input: {

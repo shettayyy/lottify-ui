@@ -1,3 +1,4 @@
+import { Pagination } from './pagination';
 import { UploadStatus } from './upload';
 
 export type LottieMetadata = {
@@ -46,5 +47,22 @@ export type LottieMetadataInput = {
     animationId: Lottie['animationId'];
     filename: Lottie['filename'];
     _id: Lottie['_id'];
+  };
+};
+
+export type GetLottieParams = {
+  input?: {
+    page?: number;
+    limit?: number;
+    search?: string;
+  };
+};
+
+export type GetLotties = {
+  lotties: {
+    result: Lottie[];
+  };
+  metadata: {
+    pagination: Pagination;
   };
 };
