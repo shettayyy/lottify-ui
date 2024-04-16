@@ -42,8 +42,8 @@ export default function LottiePage(props: LottiePageProps) {
     if (!value) return null;
 
     return (
-      <div>
-        <p className="text-lg font-semibold">{label}:</p>
+      <div className="flex flex-col items-center">
+        <p className="text-lg font-semibold">{label}</p>
         <p className="capitalize text-gray-400">{value}</p>
       </div>
     );
@@ -63,18 +63,30 @@ export default function LottiePage(props: LottiePageProps) {
 
   return (
     <main className="container mx-auto p-4">
-      <div className="mt-4 flex justify-end">
-        <Button onClick={handleCopyUrl}>Copy URL</Button>
-      </div>
+      <div className="flex flex-col space-y-16">
+        <h1 className="text-center text-3xl font-semibold capitalize">
+          {formattedFilename}{' '}
+          <span className="text-sm text-slate-500">
+            ({formatBytes(lottie.filesize)})
+          </span>
+        </h1>
 
-      <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2">
-        <LottiePlayer animationData={animationData} />
+        <div className="relative h-96 w-full overflow-hidden">
+          <LottiePlayer
+            animationData={animationData}
+            width="100%"
+            height="auto"
+            className="absolute inset-0"
+          />
+        </div>
 
-        <div className="grid grid-cols-2 gap-8">
-          {renderMetaField('Filename', formattedFilename)}
+        <div className="flex justify-center">
+          <Button onClick={handleCopyUrl}>Copy URL</Button>
+        </div>
+
+        <div className="m-auto grid max-w-screen-lg grid-cols-2 gap-8 md:grid-cols-4">
           {renderMetaField('Author', lottie.metadata?.author)}
           {renderMetaField('Description', lottie.metadata?.description)}
-          {renderMetaField('Size', formatBytes(lottie.filesize))}
           {renderMetaField(
             'Dimensions',
             `${lottie.metadata?.width ?? 0}x${lottie.metadata?.height ?? 0}`,
@@ -83,11 +95,6 @@ export default function LottiePage(props: LottiePageProps) {
           {renderMetaField('Duration', lottie.metadata?.duration)}
           {renderMetaField('Layers', lottie.metadata?.layerCount)}
           {renderMetaField('Total Frames', lottie.metadata?.totalFrames)}
-          {renderMetaField('Generator', lottie.metadata?.generator)}
-          {renderMetaField(
-            'User-provided Filename',
-            lottie.metadata?.userFilename,
-          )}
         </div>
       </div>
     </main>
