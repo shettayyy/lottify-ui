@@ -92,6 +92,7 @@ export default function RootLayout({
         suppressHydrationWarning={true}
       >
         <PWALifeCycle />
+
         <ApolloProvider>
           <ToastProvider>
             <UploadStatusProvider>
