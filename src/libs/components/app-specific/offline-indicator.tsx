@@ -19,7 +19,7 @@ const OfflineIndicator: React.FC = () => {
 
   return (
     <div
-      className={`fixed bottom-0 right-0 p-2 ${isOnline ? 'hidden' : 'block'} bg-red-500 text-white`}
+      className={`fixed bottom-0 left-0 p-2 ${isOnline ? 'hidden' : 'block'} bg-red-500 text-white`}
     >
       You are offline.
     </div>

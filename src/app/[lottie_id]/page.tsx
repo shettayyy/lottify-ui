@@ -2,12 +2,13 @@
 
 import { useQuery } from '@apollo/client';
 import LottiePlayer from 'lottie-react';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import Button from '@/libs/components/core/button';
 import { GET_LOTTIE } from '@/libs/graphql/queries/lottie';
 import { useLottieAnimation } from '@/libs/hooks/useLottieAnimation';
 import { GetLottie, GetLottieInput } from '@/libs/types/lottie';
+import { UploadStatus } from '@/libs/types/upload';
 import { formatBytes } from '@/libs/utils/file';
 import { showToast } from '@/libs/utils/toast';
 
@@ -19,7 +20,10 @@ type LottiePageProps = {
 
 export default function LottiePage(props: LottiePageProps) {
   const { lottie_id } = props.params;
-  const { data, loading } = useQuery<GetLottie, GetLottieInput>(GET_LOTTIE, {
+  const { data, loading, startPolling, stopPolling } = useQuery<
+    GetLottie,
+    GetLottieInput
+  >(GET_LOTTIE, {
     variables: {
       input: {
         id: lottie_id,
@@ -48,6 +52,21 @@ export default function LottiePage(props: LottiePageProps) {
       </div>
     );
   };
+
+  useEffect(() => {
+    // Start polling if data.lottie.uploadStatus is UPLOADING
+    // Stop polling if data.lottie.uploadStatus is UPLOADED or FAILED
+    // Stop polling after 5 minutes if data.lottie.uploadStatus is UPLOADING
+    if (data?.lottie?.uploadStatus === UploadStatus.UPLOADING) {
+      startPolling(5000);
+
+      setTimeout(() => {
+        stopPolling();
+      }, 300000);
+    } else {
+      stopPolling();
+    }
+  }, [data?.lottie?.uploadStatus, startPolling, stopPolling]);
 
   if (loading) {
     return <p>Loading...</p>;
@@ -86,18 +105,32 @@ export default function LottiePage(props: LottiePageProps) {
           </Button>
         </div>
 
-        <div className="m-auto grid max-w-screen-lg grid-cols-2 gap-8 md:grid-cols-4">
-          {renderMetaField('Author', lottie.metadata?.author)}
-          {renderMetaField('Description', lottie.metadata?.description)}
-          {renderMetaField(
-            'Dimensions',
-            `${lottie.metadata?.width ?? 0}x${lottie.metadata?.height ?? 0}`,
-          )}
-          {renderMetaField('Frame rate', lottie.metadata?.frameRate)}
-          {renderMetaField('Duration', lottie.metadata?.duration)}
-          {renderMetaField('Layers', lottie.metadata?.layerCount)}
-          {renderMetaField('Total Frames', lottie.metadata?.totalFrames)}
-        </div>
+        {lottie.uploadStatus === UploadStatus.UPLOADED && (
+          <div className="m-auto grid max-w-screen-lg grid-cols-2 gap-8 md:grid-cols-4">
+            {renderMetaField('Author', lottie.metadata?.author)}
+            {renderMetaField('Description', lottie.metadata?.description)}
+            {renderMetaField(
+              'Dimensions',
+              `${lottie.metadata?.width ?? 0}x${lottie.metadata?.height ?? 0}`,
+            )}
+            {renderMetaField('Frame rate', lottie.metadata?.frameRate)}
+            {renderMetaField('Duration', lottie.metadata?.duration)}
+            {renderMetaField('Layers', lottie.metadata?.layerCount)}
+            {renderMetaField('Total Frames', lottie.metadata?.totalFrames)}
+          </div>
+        )}
+
+        {lottie.uploadStatus === UploadStatus.UPLOADING && (
+          <p className="text-center text-lg font-semibold">
+            Processing the animation. Metadata will be available soon...
+          </p>
+        )}
+
+        {lottie.uploadStatus === UploadStatus.FAILED && (
+          <p className="text-center text-lg font-semibold">
+            Failed to process the animation metadata. We&apos;re working on it!
+          </p>
+        )}
       </div>
     </main>
   );
