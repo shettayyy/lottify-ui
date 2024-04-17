@@ -82,6 +82,10 @@ export const uploadFileInChunksWithRetry = async ({
       onUploadProgress: progressEvent => {
         totalUploaded += progressEvent.loaded;
 
+        if (totalUploaded > fileSize) {
+          totalUploaded = fileSize;
+        }
+
         onUploadProgress({
           ...progressEvent,
           loaded: totalUploaded,
