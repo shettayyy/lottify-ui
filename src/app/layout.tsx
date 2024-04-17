@@ -3,6 +3,7 @@ import './globals.css';
 import type { Metadata, Viewport } from 'next';
 import { Inter, Quicksand } from 'next/font/google';
 
+import OfflineIndicator from '@/libs/components/app-specific/offline-indicator';
 import PWAInstallPrompt from '@/libs/components/app-specific/pwa-install-prompt';
 import { Search } from '@/libs/components/core/search';
 import { Header } from '@/libs/components/layout/header';
@@ -88,6 +89,7 @@ export default function RootLayout({
         </ApolloProvider>
 
         <PWAInstallPrompt />
+        <OfflineIndicator />
       </body>
     </html>
   );
