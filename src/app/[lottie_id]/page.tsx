@@ -9,7 +9,7 @@ import { GET_LOTTIE } from '@/libs/graphql/queries/lottie';
 import { useLottieAnimation } from '@/libs/hooks/useLottieAnimation';
 import { GetLottie, GetLottieInput } from '@/libs/types/lottie';
 import { UploadStatus } from '@/libs/types/upload';
-import { formatBytes } from '@/libs/utils/file';
+import { formatBytes, formatFilename } from '@/libs/utils/file';
 import { showToast } from '@/libs/utils/toast';
 
 type LottiePageProps = {
@@ -78,7 +78,7 @@ export default function LottiePage(props: LottiePageProps) {
 
   const { lottie } = data;
 
-  const formattedFilename = lottie.filename.replace(/[_-]/g, ' ');
+  const formattedFilename = formatFilename(lottie.filename);
 
   return (
     <main className="container mx-auto p-4">

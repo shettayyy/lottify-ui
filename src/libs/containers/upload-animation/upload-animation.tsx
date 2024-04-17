@@ -30,11 +30,12 @@ export const UploadAnimation = () => {
       onError: error => {
         showToast('error', (error as Error).message);
       },
+      refetchQueries: ['GetLotties'],
     },
   );
 
   const onUploadProgress = useCallback(
-    (progressEvent: AxiosProgressEvent, animationId: string, file: File) => {
+    (progressEvent: AxiosProgressEvent, lottie: Lottie) => {
       // Handle upload progress here
       const total = progressEvent.total || 0; // Optional chaining used here
       const loaded = progressEvent.loaded;
@@ -49,8 +50,7 @@ export const UploadAnimation = () => {
       }
 
       updateQueue({
-        animationId,
-        filename: file.name,
+        lottie,
         progress,
         isTotalUnkown,
         error: '',
@@ -70,7 +70,7 @@ export const UploadAnimation = () => {
           signedUrl: url,
           data: file,
           onUploadProgress: progressEvent => {
-            onUploadProgress(progressEvent, animationId, file);
+            onUploadProgress(progressEvent, lottie);
           },
         });
 
@@ -78,8 +78,7 @@ export const UploadAnimation = () => {
         // In our case, this should never happen though
         if (!file.size) {
           updateQueue({
-            animationId,
-            filename: file.name,
+            lottie,
             progress: 100,
             isTotalUnkown: true,
           });
@@ -100,8 +99,7 @@ export const UploadAnimation = () => {
         showToast('error', (error as Error).message);
 
         updateQueue({
-          animationId,
-          filename: file.name,
+          lottie,
           progress: 0,
           isTotalUnkown: false,
           error: (error as Error).message,

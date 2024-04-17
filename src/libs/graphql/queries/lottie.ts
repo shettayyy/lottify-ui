@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export const GET_LOTTIES = gql`
-  query getLotties($input: GetLottieParams) {
+  query GetLotties($input: GetLottieParams) {
     lotties(input: $input) {
       result {
         _id
@@ -19,7 +19,7 @@ export const GET_LOTTIES = gql`
 `;
 
 export const GET_LOTTIE = gql`
-  query getLottie($input: GetLottieInput!) {
+  query GetLottie($input: GetLottieInput!) {
     lottie(input: $input) {
       _id
       filename

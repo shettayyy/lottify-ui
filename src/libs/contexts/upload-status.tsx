@@ -5,9 +5,10 @@
 'use client';
 import { createContext, PropsWithChildren, useContext, useState } from 'react';
 
+import { Lottie } from '../types/lottie';
+
 export type LottieUploadProgressStatus = {
-  animationId: string;
-  filename: string;
+  lottie: Lottie;
   progress: number;
   isTotalUnkown: boolean;
   error?: string;
@@ -37,18 +38,21 @@ export const UploadStatusProvider: React.FC<PropsWithChildren> = ({
   };
 
   const updateQueue = (file: LottieUploadProgressStatus) => {
-    const existingFile = queue.find(f => f.animationId === file.animationId);
-
-    if (existingFile) {
-      setQueue(prevQueue =>
-        prevQueue.map(f =>
-          f.animationId === file.animationId ? { ...f, ...file } : f,
-        ),
+    setQueue((prevQueue: LottieUploadProgressStatus[]) => {
+      const existingFile = prevQueue.find(
+        f => f.lottie._id === file.lottie._id,
       );
-    } else {
-      setQueue(prevQueue => [...prevQueue, file]);
-      setCount(prevCount => prevCount + 1);
-    }
+
+      if (existingFile) {
+        return prevQueue.map(f =>
+          f.lottie._id === file.lottie._id ? { ...f, ...file } : f,
+        );
+      } else {
+        const newQueue = [...prevQueue, file];
+        setCount(newQueue.length);
+        return newQueue;
+      }
+    });
   };
 
   return (

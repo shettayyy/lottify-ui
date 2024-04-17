@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 import { useLottieAnimation } from '@/libs/hooks/useLottieAnimation';
 import { Lottie } from '@/libs/types/lottie';
-import { formatBytes } from '@/libs/utils/file';
+import { formatBytes, formatFilename } from '@/libs/utils/file';
 
 export type LottieCardProps = {
   lottie?: Lottie;
@@ -53,7 +53,7 @@ export const LottieCard = ({ lottie, loading }: LottieCardProps) => {
 
   if (!lottie) return null;
 
-  const formattedFilename = lottie.filename.replace(/[_-]/g, ' ');
+  const formattedFilename = formatFilename(lottie.filename);
 
   return (
     <Link

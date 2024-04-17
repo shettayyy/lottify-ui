@@ -5,6 +5,7 @@ import { Inter, Quicksand } from 'next/font/google';
 
 import OfflineIndicator from '@/libs/components/app-specific/offline-indicator';
 import PWAInstallPrompt from '@/libs/components/app-specific/pwa-install-prompt';
+import UploadProgressMenu from '@/libs/components/app-specific/upload-progress-menu';
 import { Search } from '@/libs/components/core/search';
 import { Header } from '@/libs/components/layout/header';
 import { ApolloProvider } from '@/libs/contexts/apollo-client';
@@ -84,6 +85,8 @@ export default function RootLayout({
               </Header>
 
               {children}
+              {/* Render the upload progress menu */}
+              <UploadProgressMenu />
             </UploadStatusProvider>
           </ToastProvider>
         </ApolloProvider>
