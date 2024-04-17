@@ -5,6 +5,7 @@ import { Inter, Quicksand } from 'next/font/google';
 
 import OfflineIndicator from '@/libs/components/app-specific/offline-indicator';
 import PWAInstallPrompt from '@/libs/components/app-specific/pwa-install-prompt';
+import { PWALifeCycle } from '@/libs/components/app-specific/pwa-lifecycle';
 import UploadProgressMenu from '@/libs/components/app-specific/upload-progress-menu';
 import { Search } from '@/libs/components/core/search';
 import { Header } from '@/libs/components/layout/header';
@@ -28,6 +29,7 @@ const APP_DESCRIPTION =
 export const metadata: Metadata = {
   manifest: '/manifest.json',
   title: APP_NAME,
+  applicationName: APP_NAME,
   description: APP_DESCRIPTION,
   appleWebApp: {
     capable: true,
@@ -89,6 +91,7 @@ export default function RootLayout({
         className={'bg-neutral-900 font-inter text-slate-100'}
         suppressHydrationWarning={true}
       >
+        <PWALifeCycle />
         <ApolloProvider>
           <ToastProvider>
             <UploadStatusProvider>
