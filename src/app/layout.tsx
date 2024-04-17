@@ -21,10 +21,22 @@ const quicksand = Quicksand({
   variable: '--font-quicksand',
 });
 
+const APP_NAME = 'Lottify';
+const APP_DESCRIPTION =
+  'Lightweight, scalable animations for your websites and apps';
+
 export const metadata: Metadata = {
   manifest: '/manifest.json',
-  title: 'Lottify',
-  description: 'Lightweight, scalable animations for your websites and apps',
+  title: APP_NAME,
+  description: APP_DESCRIPTION,
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: APP_NAME,
+  },
+  formatDetection: {
+    telephone: false,
+  },
   icons: [
     {
       href: 'favicon/favicon.ico',
