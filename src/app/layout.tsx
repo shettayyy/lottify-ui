@@ -10,7 +10,6 @@ import UploadProgressMenu from '@/libs/components/app-specific/upload-progress-m
 import { Header } from '@/libs/components/layout/header';
 import { UploadAnimation } from '@/libs/containers/upload-animation/upload-animation';
 import { ApolloProvider } from '@/libs/contexts/apollo-client';
-import StoreProvider from '@/libs/contexts/store';
 import ToastProvider from '@/libs/contexts/toastify';
 import { UploadStatusProvider } from '@/libs/contexts/upload-status';
 
@@ -95,12 +94,11 @@ export default function RootLayout({
         <PWALifeCycle />
 
         <ApolloProvider>
-          <StoreProvider>
-            <ToastProvider>
-              <UploadStatusProvider>
-                <Header>
-                  <UploadAnimation />
-                  {/* <h4 className="font-quicksand text-base">
+          <ToastProvider>
+            <UploadStatusProvider>
+              <Header>
+                <UploadAnimation />
+                {/* <h4 className="font-quicksand text-base">
                     Made with{' '}
                     <span role="img" aria-label="heart">
                       ❤️
@@ -110,14 +108,13 @@ export default function RootLayout({
                       LottieFiles
                     </span>
                   </h4> */}
-                </Header>
+              </Header>
 
-                {children}
-                {/* Render the upload progress menu */}
-                <UploadProgressMenu />
-              </UploadStatusProvider>
-            </ToastProvider>
-          </StoreProvider>
+              {children}
+              {/* Render the upload progress menu */}
+              <UploadProgressMenu />
+            </UploadStatusProvider>
+          </ToastProvider>
         </ApolloProvider>
 
         <PWAInstallPrompt />
