@@ -1,35 +1,40 @@
 'use client';
-import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/16/solid';
+import { XMarkIcon } from '@heroicons/react/16/solid';
 import { clsx } from 'clsx';
 import { FC } from 'react';
 
-import useToggle from '../../hooks/useToggle';
-
 type SearchProps = {
   placeholder?: string;
+  className?: string;
+  inputClassName?: string;
+  onClear?: () => void;
+  value?: string;
+  onChange?: (value: string) => void;
 };
 
-export const Search: FC<SearchProps> = ({ placeholder = 'Search...' }) => {
-  const [isSearchBarOpen, toggle] = useToggle();
+export const Search: FC<SearchProps> = ({
+  placeholder = 'Search...',
+  className,
+  inputClassName,
+  onClear,
+  value,
+  onChange,
+}) => {
   return (
-    <div className="relative flex w-full items-center justify-end">
+    <div className={clsx('relative flex items-center', className)}>
       <input
         type="text"
         placeholder={placeholder}
         className={clsx(
-          'w-4/5 rounded-full px-4 py-2 text-black outline-none transition-all duration-300 md:w-2/4',
-          {
-            'visible opacity-100': isSearchBarOpen,
-            'invisible opacity-0 md:visible md:opacity-100': !isSearchBarOpen,
-          },
+          'rounded-full px-4 py-2 text-black outline-none transition-all duration-300 md:w-2/4',
+          inputClassName,
         )}
+        value={value}
+        onChange={e => onChange?.(e.target.value)}
       />
-      <button className="absolute right-0 md:hidden" onClick={toggle}>
-        {isSearchBarOpen ? (
-          <XMarkIcon className="h-8 w-8 text-gray-700" />
-        ) : (
-          <MagnifyingGlassIcon className="h-8 w-8 text-primary" />
-        )}
+
+      <button className="absolute right-2" onClick={onClear}>
+        <XMarkIcon className="h-8 w-8 text-gray-700" />
       </button>
     </div>
   );

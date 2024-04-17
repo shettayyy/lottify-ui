@@ -111,13 +111,9 @@ export const UploadAnimation = () => {
 
   return (
     <>
-      <Button
-        className="flex items-center space-x-2"
-        variant="filled"
-        onClick={toggle}
-      >
+      <Button variant="filled" onClick={toggle}>
         <CloudArrowUpIcon className="h-5 w-5" />
-        <span className="hidden md:flex">Upload animations</span>
+        <span className="hidden md:block">Upload animations</span>
       </Button>
 
       <Modal title="Upload animation" isOpen={isOpen} toggle={toggle}>

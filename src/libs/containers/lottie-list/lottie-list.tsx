@@ -1,6 +1,6 @@
 'use client';
 import { useQuery } from '@apollo/client';
-import { useCallback } from 'react';
+import { FC, useCallback } from 'react';
 
 import { LottieCard } from '@/libs/components/app-specific/lottie-card';
 import CircularLoader from '@/libs/components/core/circular-loader';
@@ -9,10 +9,21 @@ import { GET_LOTTIES } from '@/libs/graphql/queries/lottie';
 import { GetLottieParams, GetLotties } from '@/libs/types/lottie';
 import { showToast } from '@/libs/utils/toast';
 
-export const LottieList = () => {
+type LottieListProps = {
+  search?: string;
+};
+
+export const LottieList: FC<LottieListProps> = ({ search = '' }) => {
   const { data, loading, fetchMore } = useQuery<GetLotties, GetLottieParams>(
     GET_LOTTIES,
     {
+      variables: {
+        input: {
+          search,
+          page: 1,
+          limit: 12,
+        },
+      },
       onError(error) {
         showToast('error', error.message);
       },

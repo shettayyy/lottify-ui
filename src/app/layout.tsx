@@ -7,9 +7,10 @@ import OfflineIndicator from '@/libs/components/app-specific/offline-indicator';
 import PWAInstallPrompt from '@/libs/components/app-specific/pwa-install-prompt';
 import { PWALifeCycle } from '@/libs/components/app-specific/pwa-lifecycle';
 import UploadProgressMenu from '@/libs/components/app-specific/upload-progress-menu';
-import { Search } from '@/libs/components/core/search';
 import { Header } from '@/libs/components/layout/header';
+import { UploadAnimation } from '@/libs/containers/upload-animation/upload-animation';
 import { ApolloProvider } from '@/libs/contexts/apollo-client';
+import StoreProvider from '@/libs/contexts/store';
 import ToastProvider from '@/libs/contexts/toastify';
 import { UploadStatusProvider } from '@/libs/contexts/upload-status';
 
@@ -94,17 +95,29 @@ export default function RootLayout({
         <PWALifeCycle />
 
         <ApolloProvider>
-          <ToastProvider>
-            <UploadStatusProvider>
-              <Header>
-                <Search placeholder="Search animations..." />
-              </Header>
+          <StoreProvider>
+            <ToastProvider>
+              <UploadStatusProvider>
+                <Header>
+                  <UploadAnimation />
+                  {/* <h4 className="font-quicksand text-base">
+                    Made with{' '}
+                    <span role="img" aria-label="heart">
+                      ❤️
+                    </span>{' '}
+                    for{' '}
+                    <span className="animate-pulse text-primary">
+                      LottieFiles
+                    </span>
+                  </h4> */}
+                </Header>
 
-              {children}
-              {/* Render the upload progress menu */}
-              <UploadProgressMenu />
-            </UploadStatusProvider>
-          </ToastProvider>
+                {children}
+                {/* Render the upload progress menu */}
+                <UploadProgressMenu />
+              </UploadStatusProvider>
+            </ToastProvider>
+          </StoreProvider>
         </ApolloProvider>
 
         <PWAInstallPrompt />
