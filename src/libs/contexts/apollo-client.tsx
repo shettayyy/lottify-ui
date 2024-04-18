@@ -21,7 +21,7 @@ const makeClient = (cache: NextSSRInMemoryCache) => () => {
     // Check if the networkError is due to the user being offline
     if (typeof window !== 'undefined' && !window.navigator.onLine) {
       if (networkError && !navigator.onLine) {
-        // Suppress the network error
+        // Suppress the network error when offline
         operation.setContext({ error: false });
       }
     }
@@ -37,7 +37,7 @@ const makeClient = (cache: NextSSRInMemoryCache) => () => {
             }),
             httpLink,
           ])
-        : ApolloLink.from([httpLink, errorLink]),
+        : ApolloLink.from([errorLink, httpLink]),
     defaultOptions: {
       watchQuery: {
         fetchPolicy: 'cache-and-network',
