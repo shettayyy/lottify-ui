@@ -25,6 +25,7 @@ export const LottieList: FC<LottieListProps> = ({ search = '' }) => {
           limit: 40,
         },
       },
+      notifyOnNetworkStatusChange: true,
       onError(error) {
         showToast('error', error.message);
       },
@@ -84,7 +85,7 @@ export const LottieList: FC<LottieListProps> = ({ search = '' }) => {
         ))}
       </div>
 
-      {!!(loading && data) && <CircularLoader className="py-4" />}
+      {!loading && <CircularLoader size={56} className="py-4" />}
 
       <InfiniteScroll onIntersect={handleIntersect} />
     </>
