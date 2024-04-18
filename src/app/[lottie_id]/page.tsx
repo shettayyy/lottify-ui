@@ -4,6 +4,8 @@ import { useQuery } from '@apollo/client';
 import LottiePlayer from 'lottie-react';
 import { useCallback, useEffect } from 'react';
 
+import { LottieDetailSkeleton } from '@/libs/components/app-specific/lottie-detail-skeleton';
+import NotFound from '@/libs/components/app-specific/not-found';
 import Button from '@/libs/components/core/button';
 import { GET_LOTTIE } from '@/libs/graphql/queries/lottie';
 import { useLottieAnimation } from '@/libs/hooks/useLottieAnimation';
@@ -69,11 +71,17 @@ export default function LottiePage(props: LottiePageProps) {
   }, [data?.lottie?.uploadStatus, startPolling, stopPolling]);
 
   if (loading) {
-    return <p>Loading...</p>;
+    // Show skeleton loader
+    return <LottieDetailSkeleton />;
   }
 
   if (!data?.lottie) {
-    return <p>Lottie not found!</p>;
+    return (
+      <NotFound
+        title="Lottie not found"
+        description="The lottie you're looking for does not exist."
+      />
+    );
   }
 
   const { lottie } = data;

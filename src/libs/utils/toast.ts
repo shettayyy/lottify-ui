@@ -1,7 +1,5 @@
 import { Slide, toast, ToastContent, ToastOptions } from 'react-toastify';
 
-import { isBrowser } from './platform';
-
 export const defaultToastOptions: ToastOptions = {
   position: 'bottom-right',
   autoClose: 4000,
@@ -35,18 +33,6 @@ export const showToast = (
     case 'success':
       return toast.success(content, optionsToApply);
     case 'error':
-      // if the user is offline and the error is a network error, don't show the toast
-      if (isBrowser()) {
-        const isOffline = !window.navigator.onLine;
-        // check if content includes words like failed to fetch, network error, etc
-        const isNetworkError = /failed to fetch|network error|offline/i.test(
-          content as string,
-        );
-
-        if (isOffline && isNetworkError) {
-          return;
-        }
-      }
       return toast.error(content, optionsToApply);
     case 'info':
       return toast.info(content, optionsToApply);

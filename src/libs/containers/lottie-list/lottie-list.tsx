@@ -3,6 +3,7 @@ import { useQuery } from '@apollo/client';
 import { FC, useCallback } from 'react';
 
 import { LottieCard } from '@/libs/components/app-specific/lottie-card';
+import NotFound from '@/libs/components/app-specific/not-found';
 import CircularLoader from '@/libs/components/core/circular-loader';
 import { InfiniteScroll } from '@/libs/components/core/infinite-scroll';
 import { GET_LOTTIES } from '@/libs/graphql/queries/lottie';
@@ -67,7 +68,12 @@ export const LottieList: FC<LottieListProps> = ({ search = '' }) => {
   }
 
   if (!data?.lotties?.result?.length) {
-    return <p>No lotties found!</p>;
+    return (
+      <NotFound
+        title="No Lotties Found"
+        description="Try searching for something else"
+      />
+    );
   }
 
   return (

@@ -43,7 +43,7 @@ const useMakeClient = () => {
     await persistCache({
       cache,
       storage: new LocalForageWrapper(localforage),
-      key: `apollo-cache-lottify-ui-${process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT}`,
+      key: `apollo-cache-lottify-ui-${process.env.NODE_ENV}`,
     });
     setPersisting(false);
   }, [cache]);

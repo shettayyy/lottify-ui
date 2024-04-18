@@ -88,7 +88,9 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${quicksand.variable}`}>
       {/* suppressHydrationWarning suppresses warning related to colorzilla */}
       <body
-        className={'bg-neutral-900 font-inter text-slate-100'}
+        className={
+          'flex h-screen flex-col bg-neutral-900 font-inter text-slate-100'
+        }
         suppressHydrationWarning={true}
       >
         <PWALifeCycle />
