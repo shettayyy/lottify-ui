@@ -8,7 +8,7 @@ export type NotFoundProps = {
 
 export default function NotFound({ title, description, icon }: NotFoundProps) {
   return (
-    <div className="flex flex-1 flex-col items-center justify-center px-4">
+    <div className="flex flex-1 flex-col items-center justify-center p-4">
       <div className="flex animate-bounce items-center">
         {icon || <ExclamationTriangleIcon className="h-32 w-32 text-primary" />}
       </div>

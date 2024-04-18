@@ -22,7 +22,7 @@ export const LottieList: FC<LottieListProps> = ({ search = '' }) => {
         input: {
           search,
           page: 1,
-          limit: 12,
+          limit: 40,
         },
       },
       onError(error) {

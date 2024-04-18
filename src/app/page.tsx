@@ -10,7 +10,7 @@ export default function Home() {
   const debouncedSearch = useDebounce(search, 500);
 
   return (
-    <main className="container m-auto p-4 sm:px-2">
+    <main className="container mx-auto flex flex-1 flex-col p-4 sm:px-2">
       <div className="mb-4 mt-2 flex flex-col gap-4 md:flex-row md:justify-between">
         <h1 className="text-center font-quicksand text-3xl font-bold uppercase tracking-widest text-slate-100">
           Discover
@@ -22,6 +22,7 @@ export default function Home() {
           placeholder="Search for a lottie..."
           value={search}
           onChange={setSearch}
+          onClear={() => setSearch('')}
         />
       </div>
 

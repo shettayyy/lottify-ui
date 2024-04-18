@@ -22,7 +22,8 @@ const validateFile = (file: File) => {
   if (!file) {
     return {
       status: false,
-      message: 'No file uploaded! Please upload a JSON file.',
+      message:
+        'No file uploaded or multiple file selected! Please upload one JSON file.',
     };
   }
 
@@ -82,7 +83,7 @@ export const UploadModalBody: FC<UploadModalProps> = props => {
   );
 
   // Get the root props and input props for the dropzone component which will be used to upload the file
-  const { getRootProps, getInputProps } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps } = useDropzone({ onDrop, maxFiles: 1 });
 
   return (
     <div {...getRootProps({ className: 'dropzone' })}>

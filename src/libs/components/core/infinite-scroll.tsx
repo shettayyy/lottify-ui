@@ -9,7 +9,7 @@ type InfiniteScrollProps = {
 export const InfiniteScroll: React.FC<InfiniteScrollProps> = ({
   onIntersect,
   rootMargin = '0px',
-  threshold = 1.0,
+  threshold = 0.75,
 }) => {
   const sentinelRef = useRef<HTMLDivElement>(null);
 
