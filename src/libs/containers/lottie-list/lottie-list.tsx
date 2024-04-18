@@ -37,7 +37,9 @@ export const LottieList: FC<LottieListProps> = ({ search = '' }) => {
       fetchMore({
         variables: {
           input: {
+            search,
             page: data.lotties.metadata.pagination.nextPage,
+            limit: 40,
           },
         },
         updateQuery: (prev, { fetchMoreResult }) => {
@@ -55,9 +57,9 @@ export const LottieList: FC<LottieListProps> = ({ search = '' }) => {
         },
       });
     }
-  }, [data, fetchMore, loading]);
+  }, [data?.lotties.metadata.pagination.nextPage, fetchMore, loading, search]);
 
-  if (loading) {
+  if (loading && !data) {
     // Show loading placeholder cards
     return (
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">

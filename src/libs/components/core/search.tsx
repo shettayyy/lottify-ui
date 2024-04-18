@@ -29,6 +29,7 @@ export const Search: FC<SearchProps> = ({
           'rounded-full px-4 py-2 text-black outline-none transition-all duration-300 md:w-2/4',
           inputClassName,
         )}
+        id="lottie-list-search-input"
         value={value}
         onChange={e => onChange?.(e.target.value)}
       />
