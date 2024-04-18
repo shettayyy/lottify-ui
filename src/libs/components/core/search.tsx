@@ -34,7 +34,7 @@ export const Search: FC<SearchProps> = ({
       />
 
       <button className="absolute right-2" onClick={onClear}>
-        <XMarkIcon className="h-8 w-8 text-gray-700" />
+        <XMarkIcon className="h-6 w-6 text-gray-700" />
       </button>
     </div>
   );
