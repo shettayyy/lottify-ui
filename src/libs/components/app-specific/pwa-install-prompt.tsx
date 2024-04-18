@@ -20,19 +20,21 @@ const PWAInstallPrompt: React.FC = () => {
       event.preventDefault();
       // Stash the event so it can be triggered later.
       setDeferredPrompt(event);
-      const lastInteraction = localStorage.getItem(
-        'installPromptLastInteraction',
-      );
-      const lastInteractionTime = lastInteraction
-        ? parseInt(lastInteraction, 10)
-        : 0;
-      const now = Date.now();
-      if (
-        !lastInteractionTime ||
-        now - lastInteractionTime > 2 * 24 * 60 * 60 * 1000
-      ) {
-        setIsOpen(true); // Show the install prompt
-      }
+      // const lastInteraction = localStorage.getItem(
+      //   'installPromptLastInteraction',
+      // );
+      // const lastInteractionTime = lastInteraction
+      //   ? parseInt(lastInteraction, 10)
+      //   : 0;
+      // const now = Date.now();
+      // if (
+      //   !lastInteractionTime ||
+      //   now - lastInteractionTime > 2 * 24 * 60 * 60 * 1000
+      // ) {
+      //   setIsOpen(true); // Show the install prompt
+      // }
+
+      setIsOpen(true);
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
@@ -65,7 +67,7 @@ const PWAInstallPrompt: React.FC = () => {
 
   const handleCancelClick = () => {
     setIsOpen(false);
-    localStorage.setItem('installPromptLastInteraction', Date.now().toString());
+    // localStorage.setItem('installPromptLastInteraction', Date.now().toString());
   };
 
   return (
