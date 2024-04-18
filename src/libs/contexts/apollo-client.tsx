@@ -26,7 +26,12 @@ const makeClient = (cache: NextSSRInMemoryCache) => () => {
             }),
             httpLink,
           ])
-        : httpLink,
+        : ApolloLink.from([httpLink]),
+    defaultOptions: {
+      watchQuery: {
+        fetchPolicy: 'cache-and-network',
+      },
+    },
   });
 };
 

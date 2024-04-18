@@ -29,7 +29,6 @@ export default function LottiePage(props: LottiePageProps) {
         id: lottie_id,
       },
     },
-    fetchPolicy: 'cache-and-network',
     onError(error) {
       showToast('error', error.message);
     },
