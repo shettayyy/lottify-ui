@@ -83,14 +83,16 @@ export default function LottiePage(props: LottiePageProps) {
   return (
     <main className="container mx-auto p-4">
       <div className="flex flex-col space-y-16">
-        <h1 className="text-center text-3xl font-semibold capitalize">
-          {formattedFilename}{' '}
-          <span className="text-sm text-slate-500">
+        <div>
+          <h1 className="text-center text-2xl font-semibold capitalize md:text-3xl">
+            {formattedFilename}{' '}
+          </h1>
+          <span className="block text-center text-sm text-slate-500">
             ({formatBytes(lottie.filesize)})
           </span>
-        </h1>
+        </div>
 
-        <div className="relative h-96 w-full overflow-hidden">
+        <div className="relative h-60 w-full overflow-hidden md:h-96">
           <LottiePlayer
             animationData={animationData}
             width="100%"
