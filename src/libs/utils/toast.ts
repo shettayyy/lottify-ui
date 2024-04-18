@@ -28,11 +28,17 @@ export const showToast = (
   options: Partial<ToastOptions> = {},
 ) => {
   const optionsToApply = { ...defaultToastOptions, ...options };
+  const isOnline = typeof window !== 'undefined' && window.navigator.onLine;
+  const isNetworkError =
+    typeof content === 'string' && content.includes('Failed to fetch');
 
   switch (type) {
     case 'success':
       return toast.success(content, optionsToApply);
     case 'error':
+      if (!isOnline && isNetworkError) {
+        return;
+      }
       return toast.error(content, optionsToApply);
     case 'info':
       return toast.info(content, optionsToApply);

@@ -7,6 +7,7 @@ import {
   NextSSRInMemoryCache,
   SSRMultipartLink,
 } from '@apollo/experimental-nextjs-app-support/ssr';
+import { onError } from '@apollo/link-error';
 import { LocalForageWrapper, persistCache } from 'apollo3-cache-persist';
 import localforage from 'localforage';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -14,6 +15,16 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 const makeClient = (cache: NextSSRInMemoryCache) => () => {
   const httpLink = new HttpLink({
     uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT,
+  });
+
+  const errorLink = onError(({ networkError, operation }) => {
+    // Check if the networkError is due to the user being offline
+    if (typeof window !== 'undefined' && !window.navigator.onLine) {
+      if (networkError && !navigator.onLine) {
+        // Suppress the network error
+        operation.setContext({ error: false });
+      }
+    }
   });
 
   return new NextSSRApolloClient({
@@ -26,7 +37,7 @@ const makeClient = (cache: NextSSRInMemoryCache) => () => {
             }),
             httpLink,
           ])
-        : ApolloLink.from([httpLink]),
+        : ApolloLink.from([httpLink, errorLink]),
     defaultOptions: {
       watchQuery: {
         fetchPolicy: 'cache-and-network',
