@@ -85,7 +85,7 @@ export const LottieList: FC<LottieListProps> = ({ search = '' }) => {
         ))}
       </div>
 
-      {!loading && <CircularLoader size={56} className="py-4" />}
+      {loading && <CircularLoader size={56} className="py-4" />}
 
       <InfiniteScroll onIntersect={handleIntersect} />
     </>
