@@ -4,7 +4,6 @@ import type { Metadata, Viewport } from 'next';
 import { Inter, Quicksand } from 'next/font/google';
 
 import OfflineIndicator from '@/libs/components/app-specific/offline-indicator';
-import PWAInstallPrompt from '@/libs/components/app-specific/pwa-install-prompt';
 import { PWALifeCycle } from '@/libs/components/app-specific/pwa-lifecycle';
 import UploadProgressMenu from '@/libs/components/app-specific/upload-progress-menu';
 import { Header } from '@/libs/components/layout/header';
@@ -109,7 +108,6 @@ export default function RootLayout({
           </ToastProvider>
         </ApolloProvider>
 
-        <PWAInstallPrompt />
         <OfflineIndicator />
       </body>
     </html>

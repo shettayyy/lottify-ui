@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 
+import PWAInstallPrompt from '@/libs/components/app-specific/pwa-install-prompt';
 import { Search } from '@/libs/components/core/search';
 import { LottieList } from '@/libs/containers/lottie-list/lottie-list';
 import { useDebounce } from '@/libs/hooks/useDebounce';
@@ -28,6 +29,7 @@ export default function Home() {
 
       {/* Render the lottie list */}
       <LottieList search={debouncedSearch} />
+      <PWAInstallPrompt />
     </main>
   );
 }
