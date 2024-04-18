@@ -98,16 +98,6 @@ export default function RootLayout({
             <UploadStatusProvider>
               <Header>
                 <UploadAnimation />
-                {/* <h4 className="font-quicksand text-base">
-                    Made with{' '}
-                    <span role="img" aria-label="heart">
-                      ❤️
-                    </span>{' '}
-                    for{' '}
-                    <span className="animate-pulse text-primary">
-                      LottieFiles
-                    </span>
-                  </h4> */}
               </Header>
 
               {children}

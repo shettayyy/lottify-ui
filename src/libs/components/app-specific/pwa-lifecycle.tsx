@@ -11,11 +11,6 @@ export function PWALifeCycle() {
       window.workbox !== undefined
     ) {
       const wb = window.workbox;
-      // add event listeners to handle PWA lifecycle events
-      wb.addEventListener('installed', event => {
-        console.info(`Event ${event.type} is triggered.`);
-        console.info(event);
-      });
 
       wb.addEventListener('waiting', () => {
         // `event.wasWaitingBeforeRegister` will be false if this is the first time the updated service worker is waiting.
@@ -37,16 +32,6 @@ export function PWALifeCycle() {
             'User rejected to update SW, keeping the old version. New version will be automatically loaded when the app is opened next time.',
           );
         }
-      });
-
-      wb.addEventListener('controlling', event => {
-        console.info(`Event ${event.type} is triggered.`);
-        console.info(event);
-      });
-
-      wb.addEventListener('activated', event => {
-        console.info(`Event ${event.type} is triggered.`);
-        console.info(event);
       });
 
       // Don't forget to call register as automatic registration is disabled.

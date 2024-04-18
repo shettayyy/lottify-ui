@@ -24,6 +24,7 @@ export const LottieList: FC<LottieListProps> = ({ search = '' }) => {
           limit: 12,
         },
       },
+      fetchPolicy: 'cache-and-network',
       onError(error) {
         showToast('error', error.message);
       },
