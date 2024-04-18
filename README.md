@@ -36,6 +36,19 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 This project is a UI for the Lottify API. It provides an interface to list, search, preview, upload and retrieve lottie files. The project is built mainly using Next.js, GraphQl and Tailwind CSS. The project is deployed on Vercel.
 
+Features:
+
+- 📁 List, preview and retrieve lottie files and metadata
+- 📱 Progressive Web Application (PWA)
+- 📡 Offline-first design
+- 📤 Upload lottie files
+- 📥 Download lottie files
+- 📦 Chunked uploads for large files
+- 📱 Responsive design
+- 🔍 Search for lottie files
+- 🚀 Deployment on Vercel
+- 🧹 Linting with ESLint, Typescript and Prettier
+
 DEMO: [Lottify UI](https://lottify-ui.vercel.app/)
 
 ### Built With
