@@ -187,4 +187,4 @@ This project is deployed on [Vercel](https://vercel.com/). The deployment is don
 
 - [Shettayyy](https://github.com/shettayyy)
 
-Made with ❤️ by LottieFiles
+Made with ❤️ for LottieFiles
